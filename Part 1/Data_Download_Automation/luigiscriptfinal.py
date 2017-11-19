@@ -20,16 +20,14 @@ from sklearn import preprocessing,neighbors
 import os
 
 class ScrapeAndMissingLoanData(luigi.Task):
-    email=luigi.Parameter()
-	password=luigi.Parameter()
-		    
+    
     def run(self):
 		
         directory = os.path.dirname(os.getcwd()) 
         newpathloanFinal = directory+'/loanstatecsvFinal'
         url = 'https://www.lendingclub.com/account/login.action?'
         postUrl = 'https://www.lendingclub.com/info/download-data.action'
-        payload = {'login_email': self.email, 'login_password': self.password}
+        payload = {'login_email': "9603sonaligc@gmail.com", 'login_password': "Gopal2145"}
         with requests.session() as s:
             loginRequest = s.post(url, data=payload)
             finalUrl = s.get(postUrl)
@@ -146,14 +144,13 @@ class ScrapeAndMissingLoanData(luigi.Task):
 		return luigi.LocalTarget('Loan.csv')
 		
 class ScrapeAndMissingDeclineData(luigi.Task):
-	email=luigi.Parameter()
-	password=luigi.Parameter()
+
 	def run(self):		
 		direct = os.path.dirname(os.getcwd()) 
 		newpathdeclineloanFinal = direct+'/declineloanstatecsvFinal'
 		url = 'https://www.lendingclub.com/account/login.action?'
 		postUrl = 'https://www.lendingclub.com/info/download-data.action'
-		payload = {'login_email': self.email, 'login_password': self.password}
+		payload = {'login_email': "9603sonaligc@gmail.com", 'login_password': "Gopal2145"}
 		with requests.session() as s:
 			loginRequest = s.post(url, data=payload)
 			finalUrl = s.get(postUrl)
@@ -224,11 +221,10 @@ class ScrapeAndMissingDeclineData(luigi.Task):
         return luigi.LocalTarget('Decline.csv')
 
 class CombineCSVForClassification(luigi.Task):
-	email=luigi.Parameter()
-	password=luigi.Parameter()
+
 	def requires(self):
-		yield ScrapeAndMissingLoanData(loginemail=self.email,loginpassword=self.password)
-		yield ScrapeAndMissingDeclineData(loginemail=self.email,loginpassword=self.password)
+		yield ScrapeAndMissingLoanData()
+		yield ScrapeAndMissingDeclineData()
 	def run(self):
 		loan_df = pd.read_csv('Loan.csv', low_memory=False) 
 		decline_df= pd.read_csv(open('Decline.csv','rU'), encoding='utf-8')
