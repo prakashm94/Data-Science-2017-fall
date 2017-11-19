@@ -139,7 +139,7 @@ class ScrapeAndMissingLoanData(luigi.Task):
 		loan_df=loan_df.rename(columns = {'fico_avg':'fico'})
 		loan_df=loan_df.rename(columns = {'addr_state':'State'})
 
-		loan_df.to_csv(self.output(), index=False)
+		loan_df.to_csv(self.output().path(), index=False)
 	def output(self):
 		return luigi.LocalTarget('Loan.csv')
 		
@@ -216,7 +216,7 @@ class ScrapeAndMissingDeclineData(luigi.Task):
 		concatDataReject=concatDataReject.rename(columns = {'Risk_Score':'fico'})
 		concatDataReject=concatDataReject.rename(columns = {'Application Date':'application_date'})
 	
-		concatDataReject.to_csv(self.output(), index=False)
+		concatDataReject.to_csv(self.output().path(), index=False)
 	def output(self):
         return luigi.LocalTarget('Decline.csv')
 
@@ -232,7 +232,7 @@ class CombineCSVForClassification(luigi.Task):
 		decline_df =decline_df[['id','loan_amnt','purpose', 'fico', 'dti','zip_code', 'State', 'emp_length', 'Year', 'Month','approval']]
 
 		df = pd.concat([loan_df,decline_df])
-		df.to_csv('Combine_Clean_Data.csv', low_memory=False)
+		df.to_csv(self.output().path(), low_memory=False)
 		
 	def output(self):
         return luigi.LocalTarget('Combine_Clean_Data.csv')
