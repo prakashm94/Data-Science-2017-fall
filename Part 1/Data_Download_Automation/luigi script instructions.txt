@@ -1,0 +1,3 @@
+How to run luigi script 
+
+python luigiscriptfinal.py --local-scheduler CombineCSVForClassification
