@@ -18,12 +18,98 @@ warnings.filterwarnings('ignore')
 import pandas as pd
 import numpy as np
 import csv
+import zipfile
+from zipfile import ZipFile
+import requests
+import time
+from selenium import webdriver
 
+class ScrapeData(luigi.Task):
+
+	def run(self):		
+		path_to_chromedriver = '/Users/madhu/Documents/NEU/Fall 2017/ADS Class/Final project/chromedriver' # change path as needed
+		browser = webdriver.Chrome(executable_path = path_to_chromedriver)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"January")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"February")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"March")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"April")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"May")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"June")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"July")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"August")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
+		url = 'https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time'
+		browser.get(url)
+		browser.find_element_by_xpath('//*[@id="XYEAR"]/option[contains(text(), "2017")]').click()
+		browser.find_element_by_xpath('//*[@id="FREQUENCY"]/option[contains(text(),"September")]').click()
+		browser.find_element_by_xpath('//*[@id="DownloadZip"]').click()
+		browser.find_element_by_css_selector(".tsbutton[name='Download2']").click()
+		time.sleep(10)
 
 		
 class ConcatenateData(luigi.Task):
+	def requires(self):
+		yield ScrapeData()
+	def run(self):
+		zfiles = ['On_Time_On_Time_Performance_2017_1.zip','On_Time_On_Time_Performance_2017_2.zip','On_Time_On_Time_Performance_2017_3.zip','On_Time_On_Time_Performance_2017_4.zip','On_Time_On_Time_Performance_2017_5.zip','On_Time_On_Time_Performance_2017_6.zip','On_Time_On_Time_Performance_2017_7.zip','On_Time_On_Time_Performance_2017_8.zip','On_Time_On_Time_Performance_2017_9.zip']
+		for z in zfiles:
+			file_path = '/Users/madhu/Downloads/'+ z
+			while not os.path.exists(file_path):
+				time.sleep(30)
 
-	def run(self):		
+			if os.path.isfile(file_path):
+				zip_ref = zipfile.ZipFile(file_path, 'r')
+				zip_ref.extractall('/Users/madhu/Documents/NEU/Fall 2017/ADS Class/Final project/Data/Data2017')
+				zip_ref.close()
+			else:
+				raise ValueError("%s isn't a file!" % file_path)	
 		cur_path = '/Users/madhu/Documents/NEU/Fall 2017/ADS Class/Final project/Data'
 		d1 = pd.read_csv(cur_path+'/Data2017/On_Time_On_Time_Performance_2017_1.csv', low_memory=False)
 		d2 = pd.read_csv(cur_path+'/Data2017/On_Time_On_Time_Performance_2017_2.csv', low_memory=False)
