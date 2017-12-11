@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FlightApp</title>
+	</head>
+	<body>
+		<form method="POST" action="/result">
+			Year: <input type="text" name="year" ></br></br>
+			Day: <input type="text" name="day"></br></br>
+			Month: <input type="text" name="month"></br></br>
+            week: <input type="text" name="week"></br></br>
+            Depatrure Location: <input type="text" name="origin"></br></br>
+			Arrival Location: <input type="text" name="dest"></br></br>
+			Arrival Time: <input type="text" name="arrtime"></br></br>
+			Departure Time: <input type="text" name="deptime"></br></br>
+			CRSArr Time: <input type="text" name="crsarrtime"></br></br>
+			CRSDep Time: <input type="text" name="crsdeptime"></br></br>
+            CRS Elapsed Time: <input type="text" name="cet"></br></br>
+            Visibility:  <input type="text" name="visbl"></br></br>
+            wind: <input type="text" name="winds"></br></br>
+            presip: <input type="text" name="pre"></br></br>
+            <input type="submit">   
+       	</form>
+       	<h2> The delay time is: {{delaytime}} </h2>
+	</body>
+</html>
