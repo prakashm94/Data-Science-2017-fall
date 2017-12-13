@@ -1,0 +1,8 @@
+library(readr)
+data <- read.csv(file="/Users/sonalichaudhari/Desktop/ADS_Project/Data/Final_Data.csv", header=TRUE, sep=",")
+library(MASS)
+library(ISLR)
+fix(data)
+names(data)
+lm.fit = lm(Flight_Status~., data = data)
+summary(lm.fit)
